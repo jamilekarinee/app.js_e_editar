@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Editar Produtoras</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script>
+            function altera(id_produtora){  
+              $.ajax({            
+                url: "/produtoras/edit/" + id_produtora, 
+                type: "PUT", 
+                data: "nome="    + $("#inputnome").val() 
+                + "&endereco="  + $("#inputendereco").val(), 
+                success: function (res) { 
+                  $(location).attr("href", "/produtoras/listar"); // id
+                },
+              });
+        }
+
+    </script>
+  </head>
+  <body>
+    <% if(resultado.id_produtora){%>
+    <h1>Editar Produtoras</h1>
+    <form method="#" action="/produtoras/edit/<%= resultado.id_produtora%>" class="row g-3">
+      <%} else {%>
+        <ul>
+          <li><a href="/produtoras/listar">Filmes Cadastrados</a></li>
+        </ul>
+    
+      <h1>Cadastro de Produtoras</h1>
+      <form method="post" action="/produtoras/add" class="row g-3">
+        <%}%>
+        <div class="col-md-6">
+          <label for="nomes" class="form-label">Nome</label>
+          <% if(resultado.id_produtora) {%>
+            <input type="text" class="form-control" id="inputnome" name="nome" placeholder="Escreva aqui o nome da Produtora" value="<%= resultado.id_produtora%>">
+  
+            <%} else {%>
+          <input type="text" class="form-control" id="inputnome" name="nome" placeholder="Escreva aqui o nome da Produtora">
+          <%}%>
+  
+        </div>
+  
+        <div class="col-md-6">
+          <label for="nomes" class="form-label">Endereço</label>
+          <% if(resultado.id_produtora) {%>
+            <input type="text" class="form-control" id="inputendereco" name="endereco" placeholder="Digite aqui o Endereço da Produtora" value="<%= resultado.endereco_produtora%>">
+  
+            <%} else {%>
+          <input type="time" class="form-control" id="inputhoras" name="horas" placeholder="Digite aqui as horas totais do Filme">
+          <%}%>
+  
+        </div>
+  
+      <div class="col-12">
+        <% if(resultado.id_produtora){%>
+          <button type="button" onclick = "altera(<%=resultado.id_produtora%>);" class="btn btn-primary">Salvar</button>
+        <%} else {%>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        <%}%>
+
+      </div>
+    </form>
+
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
+    </script>
+</html>
